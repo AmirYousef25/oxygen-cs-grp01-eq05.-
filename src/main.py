@@ -13,7 +13,10 @@ class Main:
     def __init__(self):
         self._hub_connection = None
         self.HOST = os.environ.get('HOST', default="http://34.95.34.5")
-        self.TOKEN = "eVBfQyhwtj"
+        token = os.getenv('TOKEN')
+        if token == None :
+            raise TypeError("token not specified in env file")
+        self.TOKEN = token
         self.TICKETS = os.environ.get('TICKETS', default=1)  # Setup your tickets here
         self.T_MAX = os.environ.get('T_MAX', default=30)  # Setup your max temperature here
         self.T_MIN = os.environ.get('T_MIN', default=15)  # Setup your min temperature here
