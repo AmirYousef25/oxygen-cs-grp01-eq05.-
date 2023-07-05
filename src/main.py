@@ -1,3 +1,5 @@
+import os
+from dotenv import load_dotenv
 from signalrcore.hub_connection_builder import HubConnectionBuilder
 import logging
 import requests
@@ -6,13 +8,15 @@ import time
 
 
 class Main:
+    load_dotenv()
+
     def __init__(self):
         self._hub_connection = None
-        self.HOST = None  # Setup your host here
-        self.TOKEN = None  # Setup your token here
-        self.TICKETS = None  # Setup your tickets here
-        self.T_MAX = None  # Setup your max temperature here
-        self.T_MIN = None  # Setup your min temperature here
+        self.HOST = os.environ.get('HOST', default="http://34.95.34.5")
+        self.TOKEN = "eVBfQyhwtj"
+        self.TICKETS = os.environ.get('TICKETS', default=1)  # Setup your tickets here
+        self.T_MAX = os.environ.get('T_MAX', default=30)  # Setup your max temperature here
+        self.T_MIN = os.environ.get('T_MIN', default=15)  # Setup your min temperature here
         self.DATABASE = None  # Setup your database here
 
     def __del__(self):
