@@ -12,22 +12,26 @@ class Main:
 
     def __init__(self):
         self._hub_connection = None
-        self.HOST = os.environ.get('HOST', default="http://34.95.34.5")
-        self.TOKEN = os.environ.get('TOKEN')
-        self.TICKETS = os.environ.get('TICKETS', default=1)  # Setup your tickets here
-        self.T_MAX = os.environ.get('T_MAX', default=30)  # Setup your max temperature here
-        self.T_MIN = os.environ.get('T_MIN', default=15)  # Setup your min temperature here
-        self.DATABASE = "postgresql://postgres:postgres@localhost:5432/postgres"  # Setup your database here
+        self.HOST = os.environ.get("HOST", default="http://34.95.34.5")
+        self.TOKEN = os.environ.get("TOKEN")
+        self.TICKETS = os.environ.get("TICKETS", default=1)  # Setup your tickets here
+        self.T_MAX = os.environ.get(
+            "T_MAX", default=30
+        )  # Setup your max temperature here
+        self.T_MIN = os.environ.get(
+            "T_MIN", default=15
+        )  # Setup your min temperature here
+        self.DATABASE = "postgresql://postgres:postgres@localhost:5432/postgres"
 
     def __del__(self):
-        if self._hub_connection != None:
+        if self._hub_connection is not None:
             self._hub_connection.stop()
 
     def setup(self):
         self.setSensorHub()
 
     def start(self):
-        if self.TOKEN == None :
+        if self.TOKEN is None:
             raise TypeError("token not specified in env file")
         self.setup()
         self._hub_connection.start()
@@ -55,7 +59,9 @@ class Main:
         self._hub_connection.on("ReceiveSensorData", self.onSensorDataReceived)
         self._hub_connection.on_open(lambda: print("||| Connection opened."))
         self._hub_connection.on_close(lambda: print("||| Connection closed."))
-        self._hub_connection.on_error(lambda data: print(f"||| An exception was thrown closed: {data.error}"))
+        self._hub_connection.on_error(
+            lambda data: print(f"||| An exception was thrown closed: {data.error}")
+        )
 
     def onSensorDataReceived(self, data):
         try:
@@ -78,13 +84,13 @@ class Main:
         details = json.loads(r.text)
         print(details)
 
-    def send_event_to_database(self, timestamp, event):
-        try:
-            # To implement
-            pass
-        except requests.exceptions.RequestException as e:
-            # To implement
-            pass
+    # def send_event_to_database(self, timestamp, event):
+    # try:
+    # To implement
+    # pass
+    # except requests.exceptions.RequestException as e:
+    # To implement
+    # pass
 
 
 if __name__ == "__main__":
