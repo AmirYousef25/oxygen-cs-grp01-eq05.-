@@ -9,8 +9,8 @@ class MainTests(unittest.TestCase):
         main = Main()
         self.assertEqual(main.HOST, "http://34.95.34.5")
         self.assertEqual(main.TICKETS, "1")
-        self.assertEqual(main.T_MAX, "35")
-        self.assertEqual(main.T_MIN, "10")
+        self.assertEqual(main.T_MAX, "30")
+        self.assertEqual(main.T_MIN, "15")
         self.assertEqual(
             main.DATABASE, "postgresql://postgres:postgres@localhost:5432/postgres"
         )
