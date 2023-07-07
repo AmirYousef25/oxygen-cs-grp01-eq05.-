@@ -33,3 +33,24 @@ jobs:
 
       - name: Run tests
         run: python -m pytest test/*
+       
+  static-analysis:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          pip install --no-cache-dir -r requirements.txt
+
+      - name: Run static analysis
+        run: |
+          flake8
+          black --check .
