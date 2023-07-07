@@ -75,5 +75,5 @@ jobs:
           context: .
           push: true
           tags: |
-            AmirYousef25/oxygen-cs-grp01-eq05.-:latest
-            AmirYousef25/oxygen-cs-grp01-eq05.-:${{ github.run_id }}
+            amiryousef25/oxygencs_eq5:latest
+            amiryousef25/oxygencs_eq5:${{ github.run_id }}
