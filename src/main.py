@@ -13,14 +13,11 @@ class Main:
     def __init__(self):
         self._hub_connection = None
         self.HOST = os.environ.get('HOST', default="http://34.95.34.5")
-        token = os.getenv('TOKEN')
-        if token == None :
-            raise TypeError("token not specified in env file")
-        self.TOKEN = token
+        self.TOKEN = os.environ.get('TOKEN')
         self.TICKETS = os.environ.get('TICKETS', default=1)  # Setup your tickets here
         self.T_MAX = os.environ.get('T_MAX', default=30)  # Setup your max temperature here
         self.T_MIN = os.environ.get('T_MIN', default=15)  # Setup your min temperature here
-        self.DATABASE = None  # Setup your database here
+        self.DATABASE = "postgresql://postgres:postgres@localhost:5432/postgres"  # Setup your database here
 
     def __del__(self):
         if self._hub_connection != None:
@@ -30,6 +27,8 @@ class Main:
         self.setSensorHub()
 
     def start(self):
+        if self.TOKEN == None :
+            raise TypeError("token not specified in env file")
         self.setup()
         self._hub_connection.start()
 
