@@ -1,0 +1,35 @@
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env: # Defining environment variables using GitHub secrets
+      TOKEN: ${{ secrets.TOKEN }}
+      TICKETS: ${{ secrets.TICKETS }}
+      T_MAX: ${{ secrets.T_MAX }}
+      T_MIN: ${{ secrets.T_MIN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Docker Database to test
+        run: |
+          docker compose up -d
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          pip install --no-cache-dir -r requirements.txt
+
+      - name: Run tests
+        run: python -m pytest test/*
